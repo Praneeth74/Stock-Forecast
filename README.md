@@ -4,4 +4,3 @@ The task is to predict whether the close price on a particular day increase, dec
 I mainly considered three approaches – 
 1.	Using OLHV values of the past trading records to predict current day’s change in the Close price (increase or decrease or no much change?).
 2.	Using just the Close price of past days to make a prediction about current day’s Close price.
-3.	Using features created using financial technical indicators
