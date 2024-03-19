@@ -6,4 +6,4 @@ I mainly considered three approaches –
 2.	Using just the Close price of past days to make a prediction about current day’s Close price.
 
 ### ** Able to acheive a precision of 50% on the test set with XGBoost and using just the close values **
-Path to the file - usingCloseValues/usingXGBoost/XGBoostWith32Features-CloseValues.ipynb
+Path to the file - [usingCloseValues/usingXGBoost/XGBoostWith32Features-CloseValues.ipynb](https://github.com/Praneeth74/Stock-Forecast/blob/main/usingCloseValues/usingXGBoost/XGBoostWith32Features-CloseValues.ipynb)
