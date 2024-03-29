@@ -128,4 +128,44 @@ def preprocess_data_equal_division(file_path, split=True, test_size = 0.2, time_
   if not le:
     labels = labels_encoded.copy()
   else:
+    labels_array[labels_array=='decrease'] = 0
+    labels_array[labels_array=='no big change'] = 1
+    labels_array[labels_array=='increase'] = 2
+    labels = labels_array.astype('int').copy()
+  if split:
+    x_train, x_valid, y_train, y_valid = train_test_split(features, labels, test_size=test_size, random_state=random_state)
+    return x_train, x_valid, y_train, y_valid
+  else:
+    return features, labels
+    
+def metric_calculations(predictions, true_values, str=False, set_ = ""):
+  accu = sum((predictions==true_values)*1)/len(true_values)*100
+  if not str:
+      TP = sum((predictions[predictions==2] == true_values[predictions==2])*1)
+      FP = sum((predictions[predictions==2] != true_values[predictions==2])*1)
+      TN = sum((predictions[predictions!=2] == true_values[predictions!=2])*1)
+      FN = sum((predictions[predictions!=2] != true_values[predictions!=2])*1)
+  else:
+      TP = sum((predictions[predictions=="increase"] == true_values[predictions=="increase"])*1)
+      FP = sum((predictions[predictions=="increase"] != true_values[predictions=="increase"])*1)
+      TN = sum((predictions[predictions!="increase"] == true_values[predictions!="increase"])*1)
+      FN = sum((predictions[predictions!="increase"] != true_values[predictions!="increase"])*1)
+  prec = TP/(TP + FP + 1e-5)*100
+  recall = TP/(TP+FN+1e-5)*100
+  specificity = TN/(TN+FP+1e-5)*100
+  F1score = 2*prec*recall/(prec+recall)
+  print(f"For {set_}")
+  print(f"""\
+  Accuracy: {accu},
+  Precision: {prec},
+  Recall: {recall},
+  Specificity: {specificity},
+OBOBOB  F1score: {F1score}""")
+  return accu, prec, recall, specificity, F1score
+  
+def metric_calculations_categorical(model, x_, y_true, batch_size=1, set_=""):
+  y_pred = model.predict(x_, batch_size)
+  y_pred_args = np.argmax(y_pred, axis=1)
+  y_true_args = np.argmax(y_true, axis=1)
+  return metric_calculations(y_pred_args, y_true_args, set_ = set_)
 
