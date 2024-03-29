@@ -10,6 +10,11 @@ def extract_df_list1(pickle_file_path):
   return dataframes_list
 
 def get_array_label_list1(dataframes_list, time_steps, min_change):
+  """
+        df_list(list): list of dataframes
+        time_steps(int): number of timesteps to consider in each sample
+        min_change(float): minimum change  under which the change is labelled as No big change
+  """
   array_list = []
   labels_list = []
   time_steps = time_steps
@@ -40,7 +45,14 @@ def encode_label_array1(label_array):
 
 def preprocess_data_via_close_values(pickle_file_path, time_steps=20, min_change=1e-5, shuffle=True, split=True, test_size=0.2, random_state=42):
   """
-  
+    pickle_file_path(str): path of the pickle file containing list of dataframes
+    time_steps(int): number of time steps to consider in a sample
+    min_change(float): minimum change  under which the change is labelled as No big change
+    shuffle(bool): whether to return as shuffled data
+    split(bool): whether to split the data into train and validation sets
+    test_size(float): size of the validation set
+    random_state(int): argument for random seed
+
   """
   dataframes_list = extract_df_list1(pickle_file_path)
   print("Columns of each dataframe", dataframes_list[0].columns)
